@@ -1,0 +1,9 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/us/c_piscine_re/42_LIBFT/libft/ft_strjoin'
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _ft_strlen, symObjAddr: 0x0, symBinAddr: 0x100003D84, symSize: 0x4C }
+  - { offset: 0x46, size: 0x8, addend: 0x0, symName: _ft_strlen, symObjAddr: 0x0, symBinAddr: 0x100003D84, symSize: 0x4C }
+  - { offset: 0x7C, size: 0x8, addend: 0x0, symName: _ft_strjoin, symObjAddr: 0x4C, symBinAddr: 0x100003DD0, symSize: 0x110 }
+  - { offset: 0xF8, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x15C, symBinAddr: 0x100003EE0, symSize: 0x88 }
+...
