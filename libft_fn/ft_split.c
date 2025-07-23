@@ -6,40 +6,41 @@
 /*   By: uvadakku <uvadakku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 14:13:21 by uvadakku          #+#    #+#             */
-/*   Updated: 2025/07/16 14:36:39 by uvadakku         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:11:47 by uvadakku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 
-static	int	count_tokens(const char *s, const char d)
+static	size_t	count_words(const char *s, char d)
 {
-	int	i;
-	int	count;
+	size_t	count;
 
-	i = 0;
-	count = 0;
-	while (s[i])
+	count = 0 ;
+	while (*s)
 	{
-		while (s[i] == d)
-			i++;
-		if (s[i] && s[i] != d)
+		while (*s && *s == d)
+			s++;
+		if (*s && *s != d)
+		{
 			count++;
-		while (s[i] && s[i] != d)
-			i++;
+			while (*s && *s != d)
+				s++;
+		}
 	}
 	return (count);
 }
 
-static	char	*copy_token(const char *s, size_t len)
+static	char	*get_next_word(const char *s, size_t len)
 {
-	char	*word;
 	size_t	i;
+	char	*word;
 
 	i = 0;
-	word = malloc(len + 1);
+	word = (char *) malloc(len + 1);
 	if (!word)
 		return (NULL);
 	while (i < len)
@@ -51,30 +52,46 @@ static	char	*copy_token(const char *s, size_t len)
 	return (word);
 }
 
-char	**ft_split(char const *s, char c)
+void	free_all(char **result, int i)
 {
-	char	**result;
+	while (i > 0)
+		free (result[--i]);
+	free (result);
+}
+
+static	void	word_boundary(const char *s, const char c,
+					size_t *start, size_t *end)
+{
+	while (s[*start] && s[*start] == c)
+		(*start)++;
+	*end = *start;
+	while (s[*end] && s[*end] != c)
+		(*end)++;
+}
+
+char	**ft_split(const char *s, char c)
+{
 	size_t	i;
+	size_t	word_count;
 	size_t	start;
 	size_t	end;
-	size_t	token_count;
+	char	**result;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	start = 0;
-	end = 0;
-	token_count = count_tokens(s, c);
-	result = malloc((token_count + 1) * sizeof(char *));
+	word_count = count_words(s, c);
+	result = malloc((word_count + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
-	while (s[end])
+	while (i < word_count)
 	{
-		while (s[end] == c)
-			end++;
+		word_boundary (s, c, &start, &end);
+		result[i] = get_next_word(s + start, end - start);
+		if (!result[i++])
+			return ((free_all(result, i)), (NULL));
 		start = end;
-		while (s[end] && s[end] != c)
-			end++;
-		if (end > start)
-			result[i++] = copy_token(s + start, end - start);
 	}
 	result[i] = NULL;
 	return (result);
