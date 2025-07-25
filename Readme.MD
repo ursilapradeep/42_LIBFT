@@ -46,8 +46,9 @@ Conversion Functions
 | --------- | ------------------------------- |
 | `ft_atoi` | Converts a string to an integer |
 | `ft_itoa` | Converts an integer to a string |
-Output
 
+
+Output
 | Function        | Description                             |
 | --------------- | --------------------------------------- |
 | `ft_putchar_fd` | Prints a character to a file descriptor |
