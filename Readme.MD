@@ -13,6 +13,7 @@ Character Checks (ctype.h equivalents)
 | `ft_isprint` | Checks for printable characters                  |
 | `ft_toupper` | Converts a lowercase letter to uppercase         |
 | `ft_tolower` | Converts an uppercase letter to lowercase        |
+
 String Functions
 
 | Function                   | Description                                 |
